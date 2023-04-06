@@ -24,6 +24,27 @@ fn main() {
         "variable.parameter",
     ];
 
+    let class_properties = &[
+        "class=\"ts-attribute\"",
+        "class=\"ts-constant\"",
+        "class=\"ts-function.builtin\"",
+        "class=\"ts-function\"",
+        "class=\"ts-keyword\"",
+        "class=\"ts-operator\"",
+        "class=\"ts-property\"",
+        "class=\"ts-punctuation\"",
+        "class=\"ts-punctuation.bracket\"",
+        "class=\"ts-punctuation.delimiter\"",
+        "class=\"ts-string\"",
+        "class=\"ts-string.special\"",
+        "class=\"ts-tag\"",
+        "class=\"ts-type\"",
+        "class=\"ts-type.builtin\"",
+        "class=\"ts-variable\"",
+        "class=\"ts-variable.builtin\"",
+        "class=\"ts-variable.parameter\"",
+    ];
+
 
     let mut highlighter = Highlighter::new();
     use tree_sitter_highlight::HighlightConfiguration;
@@ -49,9 +70,9 @@ fn main() {
     ).unwrap();
 
     let mut html = HtmlRenderer::new();
-    html.render(highlights, code, &|h| &[66]).unwrap();
+    html.render(highlights, code, &|h| class_properties[h.0].as_bytes()).unwrap();
 
     for l in html.lines() {
-        println!("{}", l);
+        print!("{}", l);
     }
 }
