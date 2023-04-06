@@ -13,14 +13,22 @@ fn main() {
         "json" => Configuration::json(),
         "javascript" => Configuration::javascript(),
         "typescript" => Configuration::typescript(),
+        "jsx" => Configuration::jsx(),
+        "tsx" => Configuration::tsx(),
         "rust" => Configuration::rust(),
         "c" => Configuration::c(),
         _ => panic!(),
     };
 
     let mut highlighter = Highlighter::new();
+
     let highlights = highlighter
-        .highlight(&language.config, code, None, |_| None)
+        .highlight(&language.config, code, None, |l| match l {
+            _ => {
+                println!("{}", l);
+                None
+            }
+        })
         .unwrap();
 
     let mut html = HtmlRenderer::new();
@@ -42,9 +50,9 @@ impl Configuration {
         let names = &["escape", "keyword", "string"];
 
         let classes = &[
-            "class=\"ts-json-escape\"",
-            "class=\"ts-json-keyword\"",
-            "class=\"ts-json-string\"",
+            "class=\"ts-escape\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-string\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -59,9 +67,9 @@ impl Configuration {
     }
 
     fn jsx() -> Self {
-        let names = &["tag", "attribute"];
+        let names = &["attribute", "tag"];
 
-        let classes = &["class=\"ts-jsx-tag\"", "class=\"ts-jsx-attribute\""];
+        let classes = &["class=\"ts-attribute\"", "class=\"ts-tag\""];
 
         let mut config = HighlightConfiguration::new(
             tree_sitter_javascript::language(),
@@ -98,25 +106,25 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"ts-js-comment\"",
-            "class=\"ts-js-constant\"",
-            "class=\"ts-js-constant-builtin\"",
-            "class=\"ts-js-constructor\"",
-            "class=\"ts-js-embedded\"",
-            "class=\"ts-js-function\"",
-            "class=\"ts-js-function-builtin\"",
-            "class=\"ts-js-function-method\"",
-            "class=\"ts-js-keyword\"",
-            "class=\"ts-js-number\"",
-            "class=\"ts-js-operator\"",
-            "class=\"ts-js-property\"",
-            "class=\"ts-js-punctuation-bracket\"",
-            "class=\"ts-js-punctuation-delimiter\"",
-            "class=\"ts-js-punctuation-special\"",
-            "class=\"ts-js-string\"",
-            "class=\"ts-js-string-special\"",
-            "class=\"ts-js-variable\"",
-            "class=\"ts-js-variable-builtin\"",
+            "class=\"ts-comment\"",
+            "class=\"ts-constant\"",
+            "class=\"ts-constant-builtin\"",
+            "class=\"ts-constructor\"",
+            "class=\"ts-embedded\"",
+            "class=\"ts-function\"",
+            "class=\"ts-function-builtin\"",
+            "class=\"ts-function-method\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-number\"",
+            "class=\"ts-operator\"",
+            "class=\"ts-property\"",
+            "class=\"ts-punctuation-bracket\"",
+            "class=\"ts-punctuation-delimiter\"",
+            "class=\"ts-punctuation-special\"",
+            "class=\"ts-string\"",
+            "class=\"ts-string-special\"",
+            "class=\"ts-variable\"",
+            "class=\"ts-variable-builtin\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -140,11 +148,11 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"keyword\"",
-            "class=\"punctuation.bracket\"",
-            "class=\"type\"",
-            "class=\"type.builtin\"",
-            "class=\"variable.parameter\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-punctuation-bracket\"",
+            "class=\"ts-type\"",
+            "class=\"ts-type-builtin\"",
+            "class=\"ts-variable-parameter\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -168,11 +176,11 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"keyword\"",
-            "class=\"punctuation.bracket\"",
-            "class=\"type\"",
-            "class=\"type.builtin\"",
-            "class=\"variable.parameter\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-punctuation-bracket\"",
+            "class=\"ts-type\"",
+            "class=\"ts-type-builtin\"",
+            "class=\"ts-variable-parameter\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -198,13 +206,13 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"ts-html-attribute\"",
-            "class=\"ts-html-comment\"",
-            "class=\"ts-html-constant\"",
-            "class=\"ts-html-punctuation-bracket\"",
-            "class=\"ts-html-string\"",
-            "class=\"ts-html-tag\"",
-            "class=\"ts-html-tag-error\"",
+            "class=\"ts-attribute\"",
+            "class=\"ts-comment\"",
+            "class=\"ts-constant\"",
+            "class=\"ts-punctuation-bracket\"",
+            "class=\"ts-string\"",
+            "class=\"ts-tag\"",
+            "class=\"ts-tag-error\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -236,19 +244,19 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"ts-css-attribute\"",
-            "class=\"ts-css-comment\"",
-            "class=\"ts-css-function\"",
-            "class=\"ts-css-keyword\"",
-            "class=\"ts-css-number\"",
-            "class=\"ts-css-operator\"",
-            "class=\"ts-css-property\"",
-            "class=\"ts-css-punctuation-delimiter\"",
-            "class=\"ts-css-string\"",
-            "class=\"ts-css-string-special\"",
-            "class=\"ts-css-tag\"",
-            "class=\"ts-css-type\"",
-            "class=\"ts-css-variable\"",
+            "class=\"ts-attribute\"",
+            "class=\"ts-comment\"",
+            "class=\"ts-function\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-number\"",
+            "class=\"ts-operator\"",
+            "class=\"ts-property\"",
+            "class=\"ts-punctuation-delimiter\"",
+            "class=\"ts-string\"",
+            "class=\"ts-string-special\"",
+            "class=\"ts-tag\"",
+            "class=\"ts-type\"",
+            "class=\"ts-variable\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -280,19 +288,19 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"ts-c-comment\"",
-            "class=\"ts-c-constant\"",
-            "class=\"ts-c-delimiter\"",
-            "class=\"ts-c-function\"",
-            "class=\"ts-c-function-special\"",
-            "class=\"ts-c-keyword\"",
-            "class=\"ts-c-label\"",
-            "class=\"ts-c-number\"",
-            "class=\"ts-c-operator\"",
-            "class=\"ts-c-property\"",
-            "class=\"ts-c-string\"",
-            "class=\"ts-c-type\"",
-            "class=\"ts-c-variable\"",
+            "class=\"ts-comment\"",
+            "class=\"ts-constant\"",
+            "class=\"ts-delimiter\"",
+            "class=\"ts-function\"",
+            "class=\"ts-function-special\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-label\"",
+            "class=\"ts-number\"",
+            "class=\"ts-operator\"",
+            "class=\"ts-property\"",
+            "class=\"ts-string\"",
+            "class=\"ts-type\"",
+            "class=\"ts-variable\"",
         ];
 
         let mut config = HighlightConfiguration::new(
@@ -331,26 +339,26 @@ impl Configuration {
         ];
 
         let classes = &[
-            "class=\"ts-rs-attribute\"",
-            "class=\"ts-rs-comment\"",
-            "class=\"ts-rs-constant\"",
-            "class=\"ts-rs-constant-builtin\"",
-            "class=\"ts-rs-constructor\"",
-            "class=\"ts-rs-escape\"",
-            "class=\"ts-rs-function\"",
-            "class=\"ts-rs-function-macro\"",
-            "class=\"ts-rs-function-method\"",
-            "class=\"ts-rs-keyword\"",
-            "class=\"ts-rs-label\"",
-            "class=\"ts-rs-operator\"",
-            "class=\"ts-rs-property\"",
-            "class=\"ts-rs-punctuation-bracket\"",
-            "class=\"ts-rs-punctuation-delimiter\"",
-            "class=\"ts-rs-string\"",
-            "class=\"ts-rs-type\"",
-            "class=\"ts-rs-type-builtin\"",
-            "class=\"ts-rs-variable-builtin\"",
-            "class=\"ts-rs-variable-parameter\"",
+            "class=\"ts-attribute\"",
+            "class=\"ts-comment\"",
+            "class=\"ts-constant\"",
+            "class=\"ts-constant-builtin\"",
+            "class=\"ts-constructor\"",
+            "class=\"ts-escape\"",
+            "class=\"ts-function\"",
+            "class=\"ts-function-macro\"",
+            "class=\"ts-function-method\"",
+            "class=\"ts-keyword\"",
+            "class=\"ts-label\"",
+            "class=\"ts-operator\"",
+            "class=\"ts-property\"",
+            "class=\"ts-punctuation-bracket\"",
+            "class=\"ts-punctuation-delimiter\"",
+            "class=\"ts-string\"",
+            "class=\"ts-type\"",
+            "class=\"ts-type-builtin\"",
+            "class=\"ts-variable-builtin\"",
+            "class=\"ts-variable-parameter\"",
         ];
 
         let mut config = HighlightConfiguration::new(
