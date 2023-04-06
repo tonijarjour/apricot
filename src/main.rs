@@ -3,33 +3,33 @@ use tree_sitter_highlight::Highlighter;
 use tree_sitter_highlight::HtmlRenderer;
 
 fn main() {
-        let args: Vec<String> = std::env::args().collect();
-        let code = std::fs::read_to_string(&args[1]).unwrap();
-        let code = code.as_bytes();
-    
-        let language = match args[2].as_str() {
-            "html" => Configuration::html(),
-            "css" => Configuration::css(),
-            "json" => Configuration::json(),
-            "javascript" => Configuration::javascript(),
-            "typescript" => Configuration::typescript(),
-            "rust" => Configuration::rust(),
-            "c" => Configuration::c(),
-            _ => panic!(),
-        };
-    
-        let mut highlighter = Highlighter::new();
-        let highlights = highlighter
-            .highlight(&language.config, code, None, |_| None)
-            .unwrap();
-    
-        let mut html = HtmlRenderer::new();
-        html.render(highlights, code, &|h| language.classes[h.0].as_bytes())
-            .unwrap();
-    
-        for l in html.lines() {
-            print!("{}", l);
-        }
+    let args: Vec<String> = std::env::args().collect();
+    let code = std::fs::read_to_string(&args[1]).unwrap();
+    let code = code.as_bytes();
+
+    let language = match args[2].as_str() {
+        "html" => Configuration::html(),
+        "css" => Configuration::css(),
+        "json" => Configuration::json(),
+        "javascript" => Configuration::javascript(),
+        "typescript" => Configuration::typescript(),
+        "rust" => Configuration::rust(),
+        "c" => Configuration::c(),
+        _ => panic!(),
+    };
+
+    let mut highlighter = Highlighter::new();
+    let highlights = highlighter
+        .highlight(&language.config, code, None, |_| None)
+        .unwrap();
+
+    let mut html = HtmlRenderer::new();
+    html.render(highlights, code, &|h| language.classes[h.0].as_bytes())
+        .unwrap();
+
+    for l in html.lines() {
+        print!("{}", l);
+    }
 }
 
 struct Configuration {
