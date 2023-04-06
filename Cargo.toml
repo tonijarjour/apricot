@@ -4,5 +4,9 @@ version = "0.0.1"
 edition = "2021"
 
 [dependencies]
-tree-sitter = "0.20"
 tree-sitter-javascript = "0.20"
+tree-sitter-typescript = "0.20"
+tree-sitter-highlight = "0.20"
+tree-sitter-rust = "0.20"
+tree-sitter-html = "0.19"
+tree-sitter-css = "0.19"
