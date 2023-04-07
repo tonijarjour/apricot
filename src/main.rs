@@ -24,7 +24,7 @@ fn main() {
 
     let highlight_styles: Vec<String> = highlight_names
         .iter()
-        .map(|n| format!("class=\"ts-{}\"", n.replace(".", "-")))
+        .map(|n| format!("class=\"ts-{}\"", n.replace('.', "-")))
         .collect();
 
     let args: Vec<String> = std::env::args().collect();
@@ -36,7 +36,7 @@ fn main() {
     use tree_sitter_highlight::Highlighter;
     let mut highlighter = Highlighter::new();
     let highlights = highlighter
-        .highlight(&language, code, None, |l| configs.get(l))
+        .highlight(language, code, None, |l| configs.get(l))
         .unwrap();
 
     use tree_sitter_highlight::HtmlRenderer;
